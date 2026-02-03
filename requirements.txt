@@ -1,4 +1,4 @@
-jira==2.0.0
-Jinja2==3.1.2
+jira==3.10.5
+Jinja2==3.1.6
 click==7.1.2
 pyOpenSSL==24.1.0

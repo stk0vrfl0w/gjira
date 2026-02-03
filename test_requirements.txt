@@ -1,6 +1,6 @@
 -r requirements.txt
-pytest==5.4.2
-pytest-mock==3.1.0
-pytest-sugar==0.9.3
-pytest-clarity==0.3.0a0
-pytest-cov==2.9.0
+pytest==9.0.2
+pytest-mock==3.15.1
+pytest-sugar==1.1.1
+pytest-clarity==1.0.1
+pytest-cov==7.0.0

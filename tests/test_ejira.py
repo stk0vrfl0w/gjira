@@ -1,5 +1,6 @@
 import os
 
+from jira.exceptions import JIRAError
 import pytest
 
 from gjira import gjira, git
@@ -173,11 +174,16 @@ def test_update_commit_msg_with_empty_text(mocker):
 
 
 def test_get_issue_raises_exception_and_return_empty_dict(mocker, jira_connection):
-    requests_get_mock = mocker.patch("requests.sessions.Session.get")
-    requests_get_mock.return_value.status_code = 404
-    requests_get_mock.return_value.text = {}
 
-    result = gjira.get_issue(jira_connection, "JIRA_ID", ("a, b"))
+    # Mock jira.issue() to raise JIRAError with 404 status
+    mock_response = mocker.Mock()
+    mock_response.status_code = 404
+    mock_response.text = "Issue not found"
+
+    jira_error = JIRAError(status_code=404, response=mock_response)
+    mocker.patch.object(jira_connection, 'issue', side_effect=jira_error)
+
+    result = gjira.get_issue(jira_connection, "JIRA_ID", ("key", "summary"))
     assert result == {}
 
 
